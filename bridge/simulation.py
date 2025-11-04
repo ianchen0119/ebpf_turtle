@@ -64,8 +64,15 @@ class Simulation(object):
                 if out_ifname in self.ipdb.interfaces: self.ipdb.interfaces[out_ifname].remove().commit()
                 raise
 
-        if out_ifc: out_ifc.up().commit()
-        ns_ipdb.interfaces.lo.up().commit()
+        if out_ifc:
+            try:
+                out_ifc.up().commit()
+            except:
+                pass  # Interface may already be up
+        try:
+            ns_ipdb.interfaces.lo.up().commit()
+        except:
+            pass  # lo may already be up
         in_ifc = ns_ipdb.interfaces[in_ifname]
         with in_ifc as v:
             v.ifname = ns_ifc

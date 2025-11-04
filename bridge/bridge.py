@@ -58,8 +58,8 @@ try:
     sim = BridgeSimulation(ipdb)
     sim.start()
     input("Press enter to quit:")
-except Exception,e:
-    print str(e)
+except Exception as e:
+    print(str(e))
     if "sim" in locals():
         for p in sim.processes: p.kill(); p.wait(); p.release()
 finally:
